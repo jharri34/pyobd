@@ -28,40 +28,41 @@ class OBD_Capture():
 
         if(self.port):
             print "Connected to "+self.port.port.name
-            
+
     def is_connected(self):
         return self.port
-        
+
     def getSupportedSensorList(self):
-        return self.supportedSensorList 
+        return self.supportedSensorList
 
     def capture_data(self):
 
         text = ""
         #Find supported sensors - by getting PIDs from OBD
-        # its a string of binary 01010101010101 
+        # its a string of binary 01010101010101
         # 1 means the sensor is supported
         self.supp = self.port.sensor(0)[1]
         self.supportedSensorList = []
         self.unsupportedSensorList = []
 
         # loop through PIDs binary
-        for i in range(0, len(self.supp)):
+        for i in range(0, 32):
             if self.supp[i] == "1":
+                print "Index 0, ",(len(self.supp))# jamall
                 # store index of sensor and sensor object
                 self.supportedSensorList.append([i+1, obd_sensors.SENSORS[i+1]])
             else:
                 self.unsupportedSensorList.append([i+1, obd_sensors.SENSORS[i+1]])
-        
+
         for supportedSensor in self.supportedSensorList:
             text += "supported sensor index = " + str(supportedSensor[0]) + " " + str(supportedSensor[1].shortname) + "\n"
-        
+
         time.sleep(3)
-        
+
         if(self.port is None):
             return None
 
-        #Loop until Ctrl C is pressed        
+        #Loop until Ctrl C is pressed
         localtime = datetime.now()
         current_time = str(localtime.hour)+":"+str(localtime.minute)+":"+str(localtime.second)+"."+str(localtime.microsecond)
         #log_string = current_time + "\n"
