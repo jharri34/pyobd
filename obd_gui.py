@@ -15,12 +15,14 @@ from threading import Thread
 from obd_capture import OBD_Capture
 from obd_sensors import SENSORS
 from obd_sensors import *
+import os
 
 #-------------------------------------------------------------------------------
 
 # OBD variables
-BACKGROUND_FILENAME = "bg_black.jpg"
-LOGO_FILENAME 		= "cowfish.png"
+dir = os.path.dirname(os.path.abspath(__file__))
+BACKGROUND_FILENAME = os.path.join(dir, "bg_black.jpg")
+LOGO_FILENAME 		= os.path.join(dir, "cowfish.png")
 
 #-------------------------------------------------------------------------------
 
